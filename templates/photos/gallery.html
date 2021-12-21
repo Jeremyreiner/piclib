@@ -1,4 +1,4 @@
-{% extends 'partials/base.html'%}
+{% extends 'base.html'%}
 {% load bootstrap4 %}
 {% block title %}Home{% endblock title %}
 {% block content %}
@@ -9,12 +9,10 @@
         </div>
         <div class="col-md-9">
                 <div class="row">
-                    
                         <!--image cards-->
                         {% include 'partials/_img_card.html' %}
                     </div>
                 </div>
         </div>
     </div>
-
 {% endblock %}
