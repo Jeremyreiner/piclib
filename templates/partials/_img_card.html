@@ -1,0 +1,18 @@
+<!--image card-->
+{% if photos %}
+    {% for photo in photos %}
+        <div class="col-md-4">
+            <div class="card my-2">
+                <img src="{{ photo.image.url}}" class="image-thumbnail" alt="{{photo.category}}">
+                <div class="card-body">
+                    <p><small>Category: {{photo.category.name}}</small></p>
+                </div>
+                <a href="{% url 'view_photo' photo.id %}" class= "btn btn-outline-dark btn-sm m-1">view</a>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="col-md-4">
+        <h1>No Photos...</h1>
+    </div>
+{% endif %}

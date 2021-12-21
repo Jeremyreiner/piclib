@@ -1,0 +1,21 @@
+{% extends 'partials/base.html'%}
+{% load bootstrap4 %}
+
+{% block title %}Add Image{% endblock title %}
+{% block content %}
+
+<section>
+    <div class="m-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <div class="card mt-3">
+                        <!--image form-->
+                        {% include 'forms/add_image_form.html' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'partials/base.html'%}
+{% load bootstrap4 %}
+{% block title %}{{photo.category.name}}{% endblock title %}
+{% block content %}
+
+<div class="m-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col">
+                <a href="{% url 'gallery' %}" class="btn btn-dark sm-3">Return</a>
+                <div style="height: 60vh width: 60vw;">
+                    <div class="card my-2">
+                        <img src="{{photo.image.url }}" class="card-img-top" alt="{{photo.category}}">
+                        <div class="card-body">
+                            <p><small>Category: {{photo.category.name}}</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

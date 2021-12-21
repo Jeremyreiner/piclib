@@ -1,0 +1,24 @@
+<!--image form-->
+<form method='POST' action="" enctype='multipart/form-data'>
+    {% csrf_token %}
+    <div class="form-group m-3">
+        <input name="description" type="text" placeholder="Enter a description" class="form-control">
+    </div>
+    <div class="form-group m-3">
+        <select required name="category" class="form-select" id="inputGroupSelect01">
+            <option value='none' >Choose...</option>
+            {% for category in categories %}
+                <option value="{{category.id}}">{{category.name}}</option>
+            {% endfor%}
+        </select>
+    </div>
+    <div class="form-group m-3">
+        <input name="new_category" type="text" placeholder="Create a new Category" class="form-control">
+    </div>
+    <div class="form-group m-3">
+        <input name="Upload_images" type="file" multiple class="form-control" id="inputGroupFile02">
+    </div>
+
+    <button type="submit" class="btn btn-primary m-3">Submit</button>
+    <a href="{% url 'gallery' %}" class="btn btn-dark sm-3">Return</a>
+</form>
