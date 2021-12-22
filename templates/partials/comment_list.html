@@ -1,0 +1,10 @@
+<!--comment list-->
+<ul class="list-group text-center">
+    {% for comment in photo.comments.all %} 
+        <li class="list-group-item"><strong> {{comment.owner}}</strong>
+            | {{comment.timestamp|date:"d F, Y"}}<br>
+            <p><small>{{comment.content}}</small></p>
+        </li>
+    {% endfor%}
+</ul>
+<!--end of comment list-->

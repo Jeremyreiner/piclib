@@ -70,7 +70,6 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
     template_name = 'photos/new_comment.html'
 
     def get_context_data(self, **kwargs):
-
         context = super().get_context_data(**kwargs)
         context['photo'] = Photo.objects.get(id=self.kwargs['photo_id'])
         return context
@@ -80,6 +79,6 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
         comment.owner = self.request.user
         photo_id = self.kwargs['photo_id']
         photo = Photo.objects.get(id=photo_id)
-        comment.post = photo
+        comment.photo = photo
         comment.save()
         return super().form_valid(form)
