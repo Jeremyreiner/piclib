@@ -10,12 +10,14 @@
                 <a href="{% url 'gallery' %}" class="btn btn-dark sm-3">Return</a>
                 <a href="{% url 'new_comment' photo.id %}" class="btn btn-dark sm-3">Comment</a><br>
                 <div style="height: 60vh width: 60vw;">
-                    <div class="card my-2">
+                    <div class="card my-2 text-center">
                         <img src="{{photo.image.url }}" class="card-img-top" alt="{{photo.category}}">
                         <div class="card-body">
                             <p><small>Category: {{photo.category.name}}</small></p>
                         </div>
                     </div>
+                    <!--comments-->
+                    {% include 'partials/comment_list.html' %}
                 </div>
             </div>
         </div>

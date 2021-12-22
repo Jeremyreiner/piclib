@@ -12,7 +12,7 @@ class Category(models.Model):
 
 
 class Photo(models.Model):
-    profile = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank=True) 
+    profile = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank=True, related_name='user_profile') 
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
     image = models.ImageField(null=False, blank=False)
     description= models.TextField(null=False, blank=False)
@@ -23,13 +23,13 @@ class Photo(models.Model):
 
 
 class Comment(models.Model):
-    photo = models.ForeignKey(Photo, on_delete=models.CASCADE, null=True, blank=True)
+    photo = models.ForeignKey(Photo, on_delete=models.CASCADE, null=False, blank=True, related_name='comments')
     content = models.CharField(max_length=350)
     timestamp = models.DateTimeField(default=timezone.now)
     owner = models.ForeignKey(User,on_delete=models.CASCADE)
 
     def get_absolute_url(self):
-        return reverse('view_photo', kwargs={'pk': self.post.id})
+        return reverse('view_photo', kwargs={'pk': self.photo.id})
 
     def __str__(self):
-        return f"Comment by {self.owner} on {self.post}."
+        return f"Comment by {self.owner} on {self.photo}."
