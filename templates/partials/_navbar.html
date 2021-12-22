@@ -80,13 +80,6 @@
                 placeholder="Search" value="" name="searched" aria-label="Search">
                 <button class="btn btn-outline-light" type="submit" value="">Search</button>
             </form> 
-
-            <form class="d-flex form" action="{% url 'search_photos' %}" method='POST'>
-                {% csrf_token %}
-                <input class="form-control me-2" type="search" 
-                placeholder="Search" value="" name="searched" aria-label="Search">
-                <button class="btn btn-outline-light" type="submit" value="">Search</button>
-            </form> 
         </div>
     </div>
 </nav>
