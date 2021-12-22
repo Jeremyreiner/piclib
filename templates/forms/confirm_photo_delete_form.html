@@ -1,0 +1,12 @@
+<!--delete photo form-->
+<form method='POST' enctype="multipart/form-data">
+    {% csrf_token %}
+    <fieldset class="form-group">
+        <legend class="border-bottem mb-4">Delete Photo</legend>
+        <p>Are you sure you would like to delete the photo: {{photo.description}}</p>
+    </fieldset><br>
+    <div class="form-group">
+        <button class="btn btn-outline-danger" type="submit">Delete</button>
+        <a class="btn btn-outline-dark " href="{{ request.META.HTTP_REFERER }}">Cancel</a>
+    </div>
+</form><br>
