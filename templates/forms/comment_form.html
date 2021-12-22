@@ -1,0 +1,13 @@
+{% load crispy_forms_tags %}
+<!--comment form-->
+<form method='POST' enctype="multipart/form-data">
+    {% csrf_token %}
+    <fieldset class="form-group">
+        <legend class="border-bottem mb-4">{{photo.description}}</legend>
+        {{form|crispy}}
+    </fieldset><br>
+    <div class="form-group">
+        <button class="btn btn-dark" type="submit">Comment</button>
+        <a href="{% url 'view_photo' photo.id %}" class="btn btn-dark sm-3">Return</a><br>
+    </div>
+</form><br>

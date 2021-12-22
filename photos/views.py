@@ -1,7 +1,13 @@
 from django.shortcuts import render, redirect
-from .models import Category, Photo
-
+from .models import Category, Photo, Comment
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import CreateView
+from django.contrib.auth.models import User
 # Create your views here.
+def about(request):
+    return render(request, 'photos/about.html')
+
+
 def gallery(request):
     category = request.GET.get('category')
     if category == None:
@@ -31,6 +37,7 @@ def AddImage(request):
     if request.method == 'POST':
         data = request.POST
         images = request.FILES.getlist('Upload_images')
+        # profile = User.instance.profile
 
         if data['category'] != 'none':
             category= Category.objects.get(id=data['category'])
@@ -41,6 +48,7 @@ def AddImage(request):
 
         for image in images:
             photo = Photo.objects.create(
+                # instance.profile = self.request.user
                 description = data['description'],
                 category = category,
                 image = image,
@@ -52,3 +60,23 @@ def AddImage(request):
         'categories': categories,
     }
     return render(request, 'photos/add_image.html', context)
+
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    model = Comment
+    fields = ['content',]
+    template_name = 'photos/new_comment.html'
+
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+        context['photo'] = Photo.objects.get(id=self.kwargs['photo_id'])
+        return context
+
+    def form_valid(self, form):
+        comment = form.save(commit=False)
+        comment.owner = self.request.user
+        photo_id = self.kwargs['photo_id']
+        photo = Photo.objects.get(id=photo_id)
+        comment.post = photo
+        comment.save()
+        return super().form_valid(form)

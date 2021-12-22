@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title%}Registration{% endblock%}
+{% block content %}
+<section id="register" class="bg-light py-5">
+    
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h4>
+                    <i class="fas fa-user-plus"></i> Register</h4>
+                </div>
+                <div class="card-body">
+                    <!--registration form-->
+                    {% include 'forms/registeration_form.html' %}
+                    <!--registration form-->
+                    <br>
+                    <div class="border-top pt-3">
+                        <small class="text-muted">
+                            Already have an account? <a href="{% url 'login'%}">Sign in</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+{% endblock content%}

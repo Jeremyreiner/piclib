@@ -12,10 +12,23 @@
     <title>Gallery | {% block title %}{% endblock title %}</title>
 </head>
 <body class="m-5">
+
+    <!--navbar-->
     <div class='container m-3'>
-        <!--navbar-->
         {% include 'partials/_navbar.html' %}
     </div>
+    <!--navbar-->
+
+    <!--messages-->
+    <div class='container m-3'>
+        {% if messages %}
+            {% for message in messages %}
+                <div class='alert alert-info'>{{message}}</div>
+            {% endfor%}
+        {% endif %}
+    </div>
+    <!--messages-->
+    
     <div class="container">
         {% block content %}
         {% endblock content%}
