@@ -1,0 +1,57 @@
+{% extends "base.html"%}
+{% load static %}
+{% block title %}
+About
+{% endblock title%}
+{% block content %}
+<!--about shop-->
+<section id="about" class="py-4">
+<div class="container">
+    <div class="row">
+    <div class="col-md-8">
+        <h2>We Search For The Perfect Home</h2>
+        <p class="lead">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt, pariatur!</p>
+        <img src="{% static 'img/about.jpg'%}" alt="">
+        <p class="mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis esse officia repudiandae ad saepe ex, amet
+        neque quod accusamus rem quia magnam magni dolorum facilis ullam minima perferendis? Exercitationem at quaerat
+        commodi id libero eveniet harum perferendis laborum molestias quia.</p>
+    </div>
+    </div>
+</div>
+</section>
+<!--about shop-->
+
+<!-- Work -->
+<section id="work" class="bg-dark text-white text-center">
+<h2 class="display-4">About us</h2>
+<h4>Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem velit aperiam, unde aliquid at similique!</h4>
+<hr>
+<a href="{% url 'gallery' %}" class="btn btn-secondary text-white btn-lg">Featured Items</a>
+</section>
+<!--work-->
+
+<!-- Team -->
+<section id="team" class="py-5">
+    <div class="container">
+        <h2 class="text-center">Our Team</h2>
+        <div class="row text-center">
+        {% if user.is_staff %}
+            {% for user in user.is_staff.all %} 
+            <div class="col-md-4">
+                <img src="{{ user.profile.profile_image.url }}" alt="" class="rounded-circle mb-3">
+                <h4>{{user.first_name }} {{user.last_name }}</h4>
+                <i class="fas fa-phone"></i>{{user.profile.phone}}
+                <i class="fas fa-envelope-open"></i>{{user.email}}</p>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class ="col-md-12">
+                <p>No Realtors Available</p>
+            </div>
+        {% endif %}
+        </div>
+    </div>
+</section>
+<!-- Team -->
+
+{% endblock content%}
