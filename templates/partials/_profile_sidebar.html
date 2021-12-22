@@ -1,0 +1,21 @@
+<!--sidebar gallery -->
+<div class="card">
+    <div class="card-header">
+    <h2 class="text-center">Profile Info</h2>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <img class="rounded-circle account-img" src="{{user.profile.profile_image.url}}">
+        </li>
+        <li class="list-group-item text-center">
+            </h4 class="account-heading">{{ user.profile }}</h4>
+        </li>
+        {% if user.profile.bio %}
+            <li class="list-group-item text-center">
+                <p class="text-secondary"> {{user.profile.bio }}</p>
+            </li>
+        {% endif %}
+
+        <a href="{% url 'profile_edit' user.username %}" class="btn btn-dark btn-block btn-sm m-1">Update Profile</a>
+    </ul>
+</div>

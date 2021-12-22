@@ -3,9 +3,10 @@
     {% for photo in photos %}
         <div class="col-md-4">
             <div class="card my-2">
-                <img src="{{ photo.image.url}}" class="image-thumbnail" alt="{{photo.category}}">
+                <p class='text-center'><small>{{photo.profile.username}}</small></p>
+                <img src="{{ photo.image.url}}" class="image-thumbnail" alt="{{photo.category}}"><hr>
                 <div class="card-body">
-                    <p><small>Category: {{photo.category.name}}</small></p>
+                    <p class='text-center'><small>Category: {{photo.category.name}}</small></p>
                 </div>
                 <a href="{% url 'view_photo' photo.id %}" class= "btn btn-outline-dark btn-sm m-1">view</a>
             </div>

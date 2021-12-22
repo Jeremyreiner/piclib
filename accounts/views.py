@@ -1,9 +1,15 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate
 from django.contrib import auth
+from django.views.generic import DetailView, UpdateView
+from photos.models import  Photo
 
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
+from .forms import UserUpdateForm, ProfileUpdateForm
+from .models import Profile
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -72,3 +78,41 @@ def logout(request):
         auth.logout(request)
         messages.success(request, 'You have been logged out')
         return redirect('gallery')
+
+
+class UserDetailView(DetailView):
+
+    template_name = 'accounts/profile.html'
+    slug_field = 'username'
+    slug_url_kwarg = 'username'
+    queryset = User.objects.all()
+
+    content_object_name ='profile'
+
+    def get_context_data(self,*args, **kwargs):
+        context = super(UserDetailView, self).get_context_data(*args, **kwargs)
+        profile = self.get_object()
+        context['photos'] = Photo.objects.filter(profile=profile).order_by('-timestamp')
+        return  context
+
+
+@login_required
+def ProfileUpdate(request, username):
+    if request.method == 'POST':
+        user_form = UserUpdateForm()
+        profile_form = ProfileUpdateForm()
+        
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'The updates to your account have been applied')
+            return redirect('gallery')
+    else:
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = ProfileUpdateForm(instance=request.user.profile)
+
+    context = {
+        'user_form': user_form,
+        'profile_form': profile_form
+    }
+    return render(request, 'accounts/update_profile.html', context)

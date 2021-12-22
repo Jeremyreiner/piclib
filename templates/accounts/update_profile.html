@@ -1,0 +1,21 @@
+{% extends "base.html"%}
+{% block title %} | Update Profile {% endblock title %}
+{% block content%}
+
+<section id="login" class="bg-light py-5">
+<div class="container">
+    <div class="row">
+    <div class="col-md-6 mx-auto">
+        <div class="card">
+        <div class="card-body">
+            <!--Update Form-->
+            {% include 'forms/profile_update_form.html'%}
+            <!--Update Form-->
+            <br>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+</section>
+{% endblock %}

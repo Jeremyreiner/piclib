@@ -20,7 +20,7 @@
                             {% else %}
                             class = "nav-item mr-4"
                             {% endif %}>
-                            <a class="nav-link" href="">
+                            <a class="nav-link" href="{% url 'user_profile' user.username %}">
                                 {{user.username}}'s Posts
                             </a>
                         </li>
