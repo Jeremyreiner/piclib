@@ -18,8 +18,6 @@ from django.db.models import Q
 
 def registration(request):
     if request.method == "POST":
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
@@ -38,8 +36,6 @@ def registration(request):
                         username=username,
                         password=password,
                         email=email,
-                        first_name=first_name,
-                        last_name=last_name
                     )
                     user.save()
                     user = authenticate(username= username, password=password2)
@@ -122,18 +118,20 @@ def ProfileUpdate(request, username):
     return render(request, 'accounts/update_profile.html', context)
 
 
-# def search_photos(request):
-#     if request.method == "POST":
-#         searched = request.POST['searched']
-#         photos = Photo.objects.filter(
-#             Q(name__icontains = searched) |
-#             Q(description__icontains = searched)
-#         )
+def search_profiles(request):
+    if request.method == "POST":
+        searched = request.POST['searched']
+        profiles = Profile.objects.filter(
+            Q(full_name__icontains = searched) |
+            Q(first_name__icontains = searched) |
+            Q(last_name__icontains = searched) |
+            Q(bio__icontains = searched)
+        )
 
-#         context = {
-#             'searched': searched,
-#             'photos':photos
-#         }
-#         return render(request, 'photos/search.html', context)
-#     else:
-#         return render(request, 'photos/search.html')
+        context = {
+            'searched': searched,
+            'profiles':profiles
+        }
+        return render(request, 'accounts/search.html', context)
+    else:
+        return render(request, 'accounts/search.html')

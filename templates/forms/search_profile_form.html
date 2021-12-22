@@ -1,0 +1,22 @@
+
+<!--search profile form-->
+<div class="col-md-9">
+    <div class="row">
+        {% if searched %}
+            {% for profile in profiles %}
+                <div class="col-md-4">
+                    <div class="card my-2">
+                        <div class='text-center mb-2'>
+                            <a href="{% url 'user_profile' profile.user.username %}" class='text-center link-secondary'>
+                                <small>{{profile}}</small>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            You havent searched for anything yet
+        {% endif %}
+        </div>
+    </div>
+</div>

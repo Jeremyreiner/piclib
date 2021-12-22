@@ -6,65 +6,87 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'gallery' %}">Home</a>
+                <li class="nav-item active">
+                    {% if '/' == request.path %}
+                        <a class="nav-link active" aria-current="page" href="{% url 'gallery' %}">Home</a>
+                    {% else %}
+                        <a class="nav-link " aria-current="page" href="{% url 'gallery' %}">Home</a>
+                    {% endif %}
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'about' %}">About</a>
+                <li class="nav-item active">
+                    {% if '/about/' == request.path %}
+                        <a class="nav-link active" aria-current="page" href="{% url 'about' %}">About</a>
+                    {% else %}
+                        <a class="nav-link" aria-current="page" href="{% url 'about' %}">About</a>
+                    {% endif %}
                 </li>
                 {% if request.user.is_authenticated %}
                     <ul class="navbar-nav ml-auto">
-                        <li
+                        <li class="nav-item active">
                             {% if '/accounts/profile/' == request.path %}
-                            class="nav-item active mr-4"
+                                <a class="nav-link active" href="{% url 'user_profile' user.username %}">
+                                    {{user.username}}'s Posts
+                                </a>
                             {% else %}
-                            class = "nav-item mr-4"
-                            {% endif %}>
-                            <a class="nav-link" href="{% url 'user_profile' user.username %}">
-                                {{user.username}}'s Posts
-                            </a>
+                                <a class="nav-link" href="{% url 'user_profile' user.username %}">
+                                    {{user.username}}'s Posts
+                                </a>
+                            {% endif %}
                         </li>
                         <li class="nav-item mr-4">
                             <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link">
                             <i class="fas fa-sign-out-alt"></i>
                             Logout
                             </a> 
-                        <form action="{% url 'logout' %}" method="POST", id="logout">
-                            {% csrf_token %}
-                            <input type="hidden">
-                        </form> 
+                            <form action="{% url 'logout' %}" method="POST", id="logout">
+                                {% csrf_token %}
+                                <input type="hidden">
+                            </form> 
+                        </li>
                     </ul>
                 {% else %}
                     <ul class="navbar-nav ml-auto">
-                        <li
-                        {% if '/accounts/' == request.path %}
-                        class="nav-item active mr-4"
-                        {% else %}
-                        class = "nav-item mr-4"
-                        {% endif %}>
-                        <a class="nav-link" href="{% url 'register' %}">
-                            <i class="fas fa-user-plus"></i> Register</a>
+                        <li class="nav-item active">
+                            {% if '/accounts/register/' == request.path %}
+                                <a class="nav-link active" href="{% url 'register' %}">
+                                <i class="fas fa-user-plus"></i> Register</a>
+                            {% else %}
+                                <a class="nav-link" href="{% url 'register' %}">
+                                    <i class="fas fa-user-plus"></i> Register</a>
+                                </a>
+                            {% endif %}
                         </li>
 
-                        <li
-                        {% if '/accounts/' == request.path %}
-                        class="nav-item active mr-4"
-                        {% else %}
-                        class = "nav-item mr-4"
-                        {% endif %}>
-                        <a class="nav-link" href="{% url 'login' %}">
-                            <i class="fas fa-sign-in-alt"></i>
-                            Login</a>
+                        <li class="nav-item active">
+                            {% if '/accounts/login/' == request.path %}
+                                <a class="nav-link active" href="{% url 'login' %}">
+                                <i class="fas fa-sign-in-alt"></i>
+                                    Login
+                                </a>
+                            {% else %}
+                                <a class="nav-link" href="{% url 'login' %}">
+                                <i class="fas fa-sign-in-alt"></i>
+                                    Login
+                                </a>
+                            {% endif %}
                         </li>
                     </ul>
                 {% endif %}
             </ul>
+
+            <form class="d-flex form" action="{% url 'search_profiles' %}" method='POST'>
+                {% csrf_token %}
+                <input class="form-control me-2" type="search" 
+                placeholder="Search" value="" name="searched" aria-label="Search">
+                <button class="btn btn-outline-light" type="submit" value="">Search</button>
+            </form> 
+
             <form class="d-flex form" action="{% url 'search_photos' %}" method='POST'>
                 {% csrf_token %}
                 <input class="form-control me-2" type="search" 
                 placeholder="Search" value="" name="searched" aria-label="Search">
                 <button class="btn btn-outline-light" type="submit" value="">Search</button>
-            </form>
+            </form> 
         </div>
     </div>
 </nav>
