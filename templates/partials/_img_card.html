@@ -3,7 +3,15 @@
     {% for photo in photos %}
         <div class="col-md-4">
             <div class="card my-2">
-                <p class='text-center'><small>{{photo.profile.username}}</small></p>
+                {% if '/' == request.path %}
+                    <a href="{% url 'user_profile' photo.profile.username %}" class='text-center link-secondary'>
+                        <small>{{photo.profile.username}}</small>
+                    </a>
+                {% else %}
+                    <div class='text-center mb-2'>
+                        <small>{{photo.profile.username}}</small>
+                    </div>
+                {% endif %}
                 <img src="{{ photo.image.url}}" class="image-thumbnail" alt="{{photo.category}}"><hr>
                 <div class="card-body">
                     <p class='text-center'><small>Category: {{photo.category.name}}</small></p>

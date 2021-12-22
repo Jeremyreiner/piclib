@@ -8,6 +8,7 @@ urlpatterns = [
     path('photos/<int:pk>/delete/', views.PhotoDeleteView.as_view(), name='delete_photo'),
     path('photos/category/<int:pk>/delete/', views.CategoryDeleteView.as_view(), name='delete_category'),
     path('photos/<int:photo_id>/comment/', views.CommentCreateView.as_view(), name='new_comment'),
-    path('about/us/', views.about, name='about'),
+    path('about/', views.about, name='about'),
+    path('search_photos/', views.search_photos, name='search_photos'),
     path('', views.gallery, name='gallery'),
 ]
