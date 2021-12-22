@@ -15,7 +15,7 @@
                 {% if request.user.is_authenticated %}
                     <ul class="navbar-nav ml-auto">
                         <li
-                            {% if '/profile/page/' == request.path %}
+                            {% if '/accounts/profile/' == request.path %}
                             class="nav-item active mr-4"
                             {% else %}
                             class = "nav-item mr-4"
@@ -59,9 +59,11 @@
                     </ul>
                 {% endif %}
             </ul>
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-light" type="submit">Search</button>
+            <form class="d-flex form" action="{% url 'search_photos' %}" method='POST'>
+                {% csrf_token %}
+                <input class="form-control me-2" type="search" 
+                placeholder="Search" value="" name="searched" aria-label="Search">
+                <button class="btn btn-outline-light" type="submit" value="">Search</button>
             </form>
         </div>
     </div>

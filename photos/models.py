@@ -19,10 +19,15 @@ class Photo(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
     image = models.ImageField(null=False, blank=False)
     description= models.TextField(null=False, blank=False)
+    name= models.CharField(max_length=15, null=False, blank=False)
     timestamp = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.description
+    
+    def get_absolute_url(self):
+        return reverse('gallery')
+
 
 
 class Comment(models.Model):

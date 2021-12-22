@@ -5,6 +5,8 @@ from accounts.models import Profile
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import CreateView
 from django.contrib.auth.models import User
+
+from django.db.models import Q
 # Create your views here.
 def about(request):
     return render(request, 'photos/about.html')
@@ -13,17 +15,33 @@ def about(request):
 def gallery(request):
     category = request.GET.get('category')
     if category == None:
-        photos = Photo.objects.all()
+        photos = Photo.objects.all().order_by("-timestamp")
     else:
-        photos = Photo.objects.filter(category__name=category)
+        photos = Photo.objects.filter(category__name=category).order_by("-timestamp")
 
     categories= Category.objects.all()
     context = {
         'categories': categories,
-        'photos': photos
+        'photos': photos,
     }
     return render(request, 'photos/gallery.html', context)
 
+
+def search_photos(request):
+    if request.method == "POST":
+        searched = request.POST['searched']
+        photos = Photo.objects.filter(
+            Q(name__icontains = searched) |
+            Q(description__icontains = searched)
+        )
+
+        context = {
+            'searched': searched,
+            'photos':photos
+        }
+        return render(request, 'photos/search.html', context)
+    else:
+        return render(request, 'photos/search.html')
 
 def SinglePhoto(request, pk):
     photo = Photo.objects.get(id=pk)
@@ -53,6 +71,7 @@ def AddImage(request):
             photo = Photo.objects.create(
                 profile = request.user,
                 description = data['description'],
+                name = data['name'],
                 category = category,
                 image = image,
             )
@@ -67,7 +86,7 @@ def AddImage(request):
 
 class PhotoUpdateView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
     model = Photo
-    fields= ['category', 'description', 'image']
+    fields= ['name', 'category', 'description', 'image']
     template_name="photos/update_photo.html"
 
     def form_valid(self, form):
@@ -79,6 +98,7 @@ class PhotoUpdateView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
         if self.request.user == photo.profile:
             return True
         return False
+    
 
 
 class PhotoDeleteView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
@@ -123,3 +143,4 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
         comment.photo = photo
         comment.save()
         return super().form_valid(form)
+

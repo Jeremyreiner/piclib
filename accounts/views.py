@@ -11,6 +11,9 @@ from .forms import UserUpdateForm, ProfileUpdateForm
 from .models import Profile
 from django.contrib.auth.decorators import login_required
 
+
+from django.db.models import Q
+
 # Create your views here.
 
 def registration(request):
@@ -117,3 +120,20 @@ def ProfileUpdate(request, username):
     }
 
     return render(request, 'accounts/update_profile.html', context)
+
+
+# def search_photos(request):
+#     if request.method == "POST":
+#         searched = request.POST['searched']
+#         photos = Photo.objects.filter(
+#             Q(name__icontains = searched) |
+#             Q(description__icontains = searched)
+#         )
+
+#         context = {
+#             'searched': searched,
+#             'photos':photos
+#         }
+#         return render(request, 'photos/search.html', context)
+#     else:
+#         return render(request, 'photos/search.html')

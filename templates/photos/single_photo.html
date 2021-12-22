@@ -1,6 +1,9 @@
 {% extends 'base.html'%}
 {% load bootstrap4 %}
+{% load static %}
+
 {% block title %}{{photo.category.name}}{% endblock title %}
+
 {% block content %}
 
 <div class="m-5">
@@ -9,7 +12,7 @@
             <div class="col">
                 <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-dark sm-3">Return</a>
                 <a href="{% url 'new_comment' photo.id %}" class="btn btn-dark sm-3">Comment</a><br>
-                <div style="height: 60vh width: 60vw;">
+                <div class="single-post">
                     <div class="card my-2 text-center">
                         <p><strong>{{photo.profile.username}} | {{photo.timestamp|date:"d F, Y"}}</strong></p>
                         <img src="{{photo.image.url }}" class="card-img-top" alt="{{photo.category}}">
