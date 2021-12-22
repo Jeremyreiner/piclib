@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
+from django.views.generic.edit import DeleteView, UpdateView
 from .models import Category, Photo, Comment
 from accounts.models import Profile
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import CreateView
 from django.contrib.auth.models import User
 # Create your views here.
@@ -62,6 +63,46 @@ def AddImage(request):
         'categories': categories,
     }
     return render(request, 'photos/add_image.html', context)
+
+
+class PhotoUpdateView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
+    model = Photo
+    fields= ['category', 'description', 'image']
+    template_name="photos/update_photo.html"
+
+    def form_valid(self, form):
+        form.instance.profile = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        photo= self.get_object()
+        if self.request.user == photo.profile:
+            return True
+        return False
+
+
+class PhotoDeleteView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
+    model = Photo
+    context_object_name = 'photo'
+    success_url= '/'
+
+    def test_func(self):
+        photo= self.get_object()
+        if self.request.user == photo.profile:
+            return True
+        return False
+
+
+class CategoryDeleteView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
+    model = Category
+    context_object_name = 'category'
+    success_url= '/'
+
+    def test_func(self):
+        category= self.get_object()
+        if self.request.user == self.request.user: #make this only a staff option
+            return True
+        return False
 
 
 class CommentCreateView(LoginRequiredMixin, CreateView):

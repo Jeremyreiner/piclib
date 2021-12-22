@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <h3 class="text-center mb-3"></h3>
+    <div class="row">
+        <!--delete form-->
+        {% include 'forms/confirm_category_delete_form.html' %}
+        <!--delete form-->
+    </div><hr>
+</div>
+
+{% endblock content %}

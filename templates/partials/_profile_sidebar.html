@@ -15,7 +15,7 @@
                 <p class="text-secondary"> {{user.profile.bio }}</p>
             </li>
         {% endif %}
-
+        {% comment %} <a href="{% url 'delete_category' category.id %}" class="btn btn-dark btn-block btn-sm m-1">Delete Category</a> {% endcomment %}
         <a href="{% url 'profile_edit' user.username %}" class="btn btn-dark btn-block btn-sm m-1">Update Profile</a>
     </ul>
 </div>
