@@ -12,7 +12,7 @@ class Category(models.Model):
 
 
 class Photo(models.Model):
-    profile = models.ForeignKey(User, on_delete=models.CASCADE) 
+    profile = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank=True) 
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
     image = models.ImageField(null=False, blank=False)
     description= models.TextField(null=False, blank=False)
@@ -23,7 +23,7 @@ class Photo(models.Model):
 
 
 class Comment(models.Model):
-    photo = models.ForeignKey(Photo, on_delete=models.CASCADE, related_name='comments')
+    photo = models.ForeignKey(Photo, on_delete=models.CASCADE, null=True, blank=True)
     content = models.CharField(max_length=350)
     timestamp = models.DateTimeField(default=timezone.now)
     owner = models.ForeignKey(User,on_delete=models.CASCADE)

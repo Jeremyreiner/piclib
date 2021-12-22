@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Category, Photo, Comment
+from accounts.models import Profile
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView
 from django.contrib.auth.models import User
@@ -33,11 +34,12 @@ def SinglePhoto(request, pk):
 
 def AddImage(request):
     categories= Category.objects.all()
+    profile = Profile.objects.filter(user=request.user)
     
     if request.method == 'POST':
         data = request.POST
         images = request.FILES.getlist('Upload_images')
-        # profile = User.instance.profile
+        
 
         if data['category'] != 'none':
             category= Category.objects.get(id=data['category'])
@@ -48,7 +50,7 @@ def AddImage(request):
 
         for image in images:
             photo = Photo.objects.create(
-                # instance.profile = self.request.user
+                profile = request.user,
                 description = data['description'],
                 category = category,
                 image = image,
@@ -60,6 +62,7 @@ def AddImage(request):
         'categories': categories,
     }
     return render(request, 'photos/add_image.html', context)
+
 
 class CommentCreateView(LoginRequiredMixin, CreateView):
     model = Comment
